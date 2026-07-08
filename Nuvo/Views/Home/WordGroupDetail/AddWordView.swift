@@ -9,10 +9,11 @@ import SwiftUI
 
 
 struct AddWordView: View {
+    @StateObject private var addWordViewModel = AddWordViewModel()
     @Environment(\.dismiss) private var dismiss
-    @State private var word = ""
-    @State private var translation = ""
+    
     let onSave: (String, String) -> Void
+
     
     var body: some View {
         
@@ -25,9 +26,9 @@ struct AddWordView: View {
             
             Spacer()
 
-            WordFieldTextView(title: "Enter word", text: $word)
+            WordFieldTextView(title: "Enter word", text: $addWordViewModel.word)
                 .padding(.vertical)
-            WordFieldTextView(title: "Enter translation", text: $translation)
+            WordFieldTextView(title: "Enter translation", text: $addWordViewModel.translation)
             
             Spacer()
             
@@ -35,15 +36,17 @@ struct AddWordView: View {
             LargeButtonView(title: "Save", color: .blue, action: saveWord)
         }
     }
-    private func saveWord() {
-        guard !word.isEmpty, !translation.isEmpty else { return }
-        onSave(word, translation)
-        dismiss()
-    }
+    
     private func addMore() {
-        guard !word.isEmpty, !translation.isEmpty else { return }
-        onSave(word, translation)
-        word = ""
-        translation = ""
+        guard addWordViewModel.canSave else { return }
+        onSave(addWordViewModel.trimmedWord, addWordViewModel.trimmedTranslation)
+        addWordViewModel.clearFields()
+   
+    }
+    
+    private func saveWord() {
+        guard addWordViewModel.canSave else { return }
+        onSave(addWordViewModel.trimmedWord, addWordViewModel.trimmedTranslation)
+        dismiss()
     }
 }

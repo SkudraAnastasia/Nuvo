@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class WordGroupDetailViewModel: ObservableObject {
-    @Published var group: WordGroupModel
+    @Binding var group: WordGroupModel
     @Published var selectedItems = Set<WordModel.ID>()
     @Published var deleteMode: EditMode = .inactive
     @Published var isAddWordViewIsShowing = false
@@ -21,8 +21,8 @@ final class WordGroupDetailViewModel: ObservableObject {
         deleteMode == .active
     }
     
-    init(group: WordGroupModel) {
-        self.group = group
+    init(group: Binding<WordGroupModel>) {
+        self._group = group
     }
     
     func startSelection() {

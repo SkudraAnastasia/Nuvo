@@ -10,6 +10,7 @@ import Combine
 
 final class WordGroupsViewModel: ObservableObject {
     @Published var groups: [WordGroupModel] = MockData.groups
+    @Published var isAddGroupViewIsShowing = false
     
     func addGroup(newGroup: WordGroupModel) {
         groups.append(newGroup)
