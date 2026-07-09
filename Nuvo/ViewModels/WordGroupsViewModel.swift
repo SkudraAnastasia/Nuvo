@@ -22,4 +22,28 @@ final class WordGroupsViewModel: ObservableObject {
     
     func sortGroups() {}
     
+    func group(with id: WordGroupModel.ID) -> WordGroupModel? {
+        groups.first { $0.id == id }
+    }
+    
+    func addWord(to groupID: WordGroupModel.ID, word: WordModel) {
+        guard let index = groups.firstIndex(where: { $0.id == groupID }) else { return }
+        groups[index].words.append(word)
+    }
+
+    func deleteWords(from groupID: WordGroupModel.ID, ids: Set<WordModel.ID> ) {
+        guard let index = groups.firstIndex(where: { $0.id == groupID }) else { return }
+        groups[index].words.removeAll { ids.contains($0.id) }
+    }
+
+    func deleteAll() {}
+
+    func sortWords(in groupID: WordGroupModel.ID) {
+        guard let index = groups.firstIndex(where: { $0.id == groupID }) else { return }
+        groups[index].words.sort { $0.word < $1.word }
+    }
+    
 }
+
+
+

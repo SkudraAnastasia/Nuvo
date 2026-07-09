@@ -8,38 +8,45 @@
 import SwiftUI
 
 struct WordGroupDetailView: View {
-    @StateObject private var wordGroupDetailViewModel: WordGroupDetailViewModel
-    
-    init(group: Binding<WordGroupModel>) { //???????
-        _wordGroupDetailViewModel = StateObject(wrappedValue: WordGroupDetailViewModel(group: group))
+    @StateObject private var wordGroupDetailViewModel = WordGroupDetailViewModel()
+    @ObservedObject var wordGroupsViewModel: WordGroupsViewModel
+    let groupID: WordGroupModel.ID
+    private var group: WordGroupModel? {
+        wordGroupsViewModel.group(with: groupID)
     }
     
     var body: some View {
-        List(wordGroupDetailViewModel.group.words, selection: $wordGroupDetailViewModel.selectedItems) { word in
-            VStack(alignment: .leading, spacing: 4) {
-                Text(word.word)
-                    .font(.headline)
-                
-                Text(word.translation)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+        Group {
+            if let group {
+                List(group.words, selection: $wordGroupDetailViewModel.selectedItems) { word in
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(word.word)
+                            .font(.headline)
+                        
+                        Text(word.translation)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .navigationTitle(group.title)
+            } else {
+                ContentUnavailableView("Group not found", systemImage: "folder")
             }
         }
-        .navigationTitle(wordGroupDetailViewModel.group.title)
-        .environment(\.editMode, $wordGroupDetailViewModel.deleteMode)
-        .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
-        .safeAreaInset(edge: .bottom,  content: {  /////
-            if !wordGroupDetailViewModel.isSelectionActive {
-                LargeButtonView(title: "Start", color: .blue, action: {})
-                    .padding(.bottom, 24)
+            .environment(\.editMode, $wordGroupDetailViewModel.deleteMode)
+            .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
+            .safeAreaInset(edge: .bottom,  content: {  /////
+                if !wordGroupDetailViewModel.isSelectionActive {
+                    LargeButtonView(title: "Start", color: .blue, action: {})
+                        .padding(.bottom, 24)
+                }
+            })
+            .toolbar {
+                topToolbar
+                bottomToolbar
             }
-        })
-        .toolbar {
-            topToolbar
-            bottomToolbar
-        }
-        .sheet(isPresented: $wordGroupDetailViewModel.isAddWordViewIsShowing) {
-            addWordSheet
+            .sheet(isPresented: $wordGroupDetailViewModel.isAddWordViewIsShowing) {
+                addWordSheet
         }
     }
 }
@@ -87,15 +94,19 @@ private extension WordGroupDetailView {
                     .padding(.trailing, 24)
                     
                     Button(role: .destructive) {
-                        wordGroupDetailViewModel.deleteSelectedItems()
+                        wordGroupsViewModel.deleteWords(
+                            from: groupID,
+                            ids: wordGroupDetailViewModel.selectedItems
+                        )
+                        wordGroupDetailViewModel.finishSelection()
                     } label: {
                         Text("Delete (\(wordGroupDetailViewModel.selectedItems.count))")
                             .bold()
                             .foregroundStyle(wordGroupDetailViewModel.isDeleteDisabled
-                                            ? .gray
-                                            : .red
-                                            )
-                            }
+                                             ? .gray
+                                             : .red
+                            )
+                    }
                     .frame(width: 100, height: 50)
                     .padding(.leading, 24)
                 }
@@ -107,17 +118,22 @@ private extension WordGroupDetailView {
         NavigationStack {
             AddWordView(onSave: { word, translation in
                 let newWord = WordModel(word: word, translation: translation)
-                wordGroupDetailViewModel.addWord(word: newWord)})
-                .blur(radius: 0)
-                .presentationDetents([.medium])
-                .presentationBackground(.white)
+                wordGroupsViewModel.addWord(to: groupID, word: newWord)
+            })
+            .blur(radius: 0)
+            .presentationDetents([.medium])
+            .presentationBackground(.white)
         }
     }
 }
+
 #Preview {
-    @Previewable @State var group = MockData.groups[0]
+    let viewModel = WordGroupsViewModel()
 
     NavigationStack {
-        WordGroupDetailView(group: $group)
+        WordGroupDetailView(
+            wordGroupsViewModel: viewModel,
+            groupID: viewModel.groups[0].id
+        )
     }
 }

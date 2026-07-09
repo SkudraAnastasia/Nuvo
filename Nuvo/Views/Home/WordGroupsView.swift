@@ -19,9 +19,12 @@ struct WordGroupsView: View {
         
         ScrollView {
             LazyVGrid(columns: colums, spacing: 8) {
-                ForEach($wordGroupsViewModel.groups) { $group in
+                ForEach(wordGroupsViewModel.groups) { group in
                     NavigationLink {
-                        WordGroupDetailView(group: $group)
+                        WordGroupDetailView(
+                            wordGroupsViewModel: wordGroupsViewModel,
+                            groupID: group.id
+                            )
                     } label: {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(group.title)
