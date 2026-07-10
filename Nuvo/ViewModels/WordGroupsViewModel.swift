@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 final class WordGroupsViewModel: ObservableObject {
-    @Published var groups: [WordGroupModel] = MockData.groups
+    @Published var groups: [WordGroupModel] = DefaultGroups.defaultGroups
     @Published var isAddGroupViewIsShowing = false
     
     func addGroup(newGroup: WordGroupModel) {
@@ -44,6 +44,7 @@ final class WordGroupsViewModel: ObservableObject {
     }
     
 }
+
 
 
 

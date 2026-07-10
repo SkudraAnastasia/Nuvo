@@ -37,7 +37,7 @@ struct WordGroupDetailView: View {
             .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
             .safeAreaInset(edge: .bottom,  content: {  /////
                 if !wordGroupDetailViewModel.isSelectionActive {
-                    LargeButtonView(title: "Start", color: .blue, action: {})
+                    LargeButtonView(title: "Start", colors: [.orange, .yellow], action: {})
                         .padding(.bottom, 24)
                 }
             })

@@ -18,7 +18,7 @@ struct WordGroupsView: View {
     var body: some View {
         
         ScrollView {
-            LazyVGrid(columns: colums, spacing: 8) {
+            LazyVGrid(columns: colums, spacing: 12) {
                 ForEach(wordGroupsViewModel.groups) { group in
                     NavigationLink {
                         WordGroupDetailView(
@@ -50,11 +50,7 @@ struct WordGroupsView: View {
             addGroupSheet
         }
         .toolbar {
-            Button {
-                wordGroupsViewModel.isAddGroupViewIsShowing = true
-            } label: {
-                Image(systemName: "plus")
-            }
+            topToolbar
         }
     }
 }
@@ -70,8 +66,34 @@ extension WordGroupsView {
                 let newGroup = WordGroupModel(title: title, words: [], isSystem: false)
                 wordGroupsViewModel.addGroup(newGroup: newGroup) })
                 .blur(radius: 0)
-                .presentationDetents([.large])
+                .presentationDetents([.medium])
                 .presentationBackground(.white)
+        }
+    }
+}
+
+private extension WordGroupsView {
+    
+    @ToolbarContentBuilder
+    var topToolbar: some ToolbarContent {
+        
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            Button {
+                wordGroupsViewModel.isAddGroupViewIsShowing = true
+            } label: {
+                Image(systemName: "plus")
+            }
+            
+            Menu {
+                Button {} label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+                Button(role: .destructive) {} label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+            }
         }
     }
 }

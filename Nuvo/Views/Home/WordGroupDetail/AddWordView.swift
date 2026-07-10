@@ -22,7 +22,7 @@ struct AddWordView: View {
             Spacer()
             
             Text("Add new words")
-                .font(.largeTitle)
+                .font(.default)
             
             Spacer()
 
@@ -32,8 +32,8 @@ struct AddWordView: View {
             
             Spacer()
             
-            LargeButtonView(title: "Add more", color: .green, action: addMore)
-            LargeButtonView(title: "Save", color: .blue, action: saveWord)
+            LargeButtonView(title: "Add more", colors: [.green, .cyan], action: addMore)
+            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveWord)
         }
     }
     

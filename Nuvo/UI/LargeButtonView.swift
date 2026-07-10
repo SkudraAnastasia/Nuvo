@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LargeButtonView: View {
     let title: String
-    let color: Color
+    let colors: [Color]
     let action: () -> Void
     
     var body: some View {
@@ -21,11 +21,16 @@ struct LargeButtonView: View {
         }
             .frame(maxWidth: .infinity)
             .padding()
-            .background(color)
+            .background(
+                LinearGradient(
+                    colors: colors,
+                    startPoint: .bottomLeading,
+                    endPoint: .topTrailing
+                )
+            )
             .clipShape(.capsule)
             .padding(.horizontal)
             .padding(.top, 8)
-            
     }
 }
 

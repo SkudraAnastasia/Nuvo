@@ -11,52 +11,31 @@ struct AddGroupView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var addGroupViewModel = AddGroupViewModel()
     let onSave: (String) -> Void
-    
-    private let colums = [
-        GridItem(.flexible(), spacing: 12),
-        GridItem(.flexible(), spacing: 12)
-    ]
-    
+
     var body: some View {
 
-        LazyVGrid(columns: colums, spacing: 8) {
-            ForEach(addGroupViewModel.defaultGroups) { group in
-                Button {
-                    addGroupViewModel.title = group.title
-                } label: {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(group.title)
-                            .foregroundStyle(.primary)
-                            .font(.headline)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
-                    .padding()
-                    .background(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
-                }
-            }
-               .buttonStyle(.plain)
-            }
-        .padding()
-    .background(Color(.systemGroupedBackground))
-    
         VStack(spacing: 16) {
             Text("Add new group")
-                .font(.largeTitle)
+                .font(.headline)
                 .padding()
             
             Spacer()
             
-            WordFieldTextView(title: "Enter title", text: $addGroupViewModel.title)
+            WordFieldTextView(
+                title: "Enter title",
+                text: Binding(
+                    get: { addGroupViewModel.title },
+                    set: { addGroupViewModel.updateTitle(newValue:($0)) }
+                )
+            )
                 .padding(.vertical)
             
-            LargeButtonView(title: "Save", color: .blue, action: saveTitle)
+            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveTitle)
         }
     }
     private func saveTitle() {
         guard addGroupViewModel.canSave else { return }
-        onSave(addGroupViewModel.title)
+        onSave(addGroupViewModel.trimmedTitle)
         dismiss()
     }
 }

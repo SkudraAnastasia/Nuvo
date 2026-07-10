@@ -7,23 +7,9 @@
 import Foundation
 import Combine
 
-enum DefaultGroupTitle: String, CaseIterable, Identifiable {
-    
-    case travel = "Travel✈️🏖"
-    case work = "Work💸💻"
-    case food = "Food🥘🍔"
-    case study = "Study📒📝"
-    case hobbies = "Hobbies🎮🪂"
-    case home = "Home🏡🛏"
-    
-    var id: String { rawValue }
-    var title: String { rawValue }
-}
-
 final class AddGroupViewModel: ObservableObject {
     @Published var title = ""
-    
-    let defaultGroups = DefaultGroupTitle.allCases
+    private let maxTitleSymbols = 24
     
     var canSave: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -32,8 +18,12 @@ final class AddGroupViewModel: ObservableObject {
     var trimmedTitle: String {
         title.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-
-    func selectDefaultGroup(group: DefaultGroupTitle) {
-        title = group.title
+    
+    func updateTitle(newValue: String) {
+        if newValue.count < maxTitleSymbols {
+            title = newValue
+        } else {
+            title = String(newValue.prefix(maxTitleSymbols))
+        }
     }
 }
