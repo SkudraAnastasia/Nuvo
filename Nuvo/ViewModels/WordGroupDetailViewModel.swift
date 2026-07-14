@@ -12,6 +12,7 @@ final class WordGroupDetailViewModel: ObservableObject {
     @Published var selectedItems = Set<WordModel.ID>()
     @Published var deleteMode: EditMode = .inactive
     @Published var isAddWordViewIsShowing = false
+    @Published var wordPendingEditing: WordModel?
     
     var isDeleteDisabled: Bool {
         selectedItems.isEmpty
@@ -38,5 +39,29 @@ final class WordGroupDetailViewModel: ObservableObject {
             selectedItems.removeAll()
             deleteMode = .inactive
         }
+    }
+    
+    func startEditing(word: WordModel) {
+        wordPendingEditing = word
+    }
+    
+    func finishEditing() {
+        wordPendingEditing = nil
+    }
+    
+    func saveEditedWord(
+        wordID: WordModel.ID,
+        newWord: String,
+        newTranslation: String,
+        viewModel: WordGroupsViewModel,
+        in groupID: WordGroupModel.ID
+    ) {
+        viewModel.updateWord(
+            in: groupID,
+            wordID: wordID,
+            newWord: newWord,
+            newTranslation: newTranslation
+        )
+        finishEditing()
     }
 }

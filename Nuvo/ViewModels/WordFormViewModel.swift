@@ -7,9 +7,14 @@
 import Foundation
 import Combine
 
-final class AddWordViewModel: ObservableObject {
-    @Published var word = ""
-    @Published var translation = ""
+final class WordFormViewModel: ObservableObject {
+    @Published var word: String
+    @Published var translation: String
+    
+    init(word: String = "", translation: String = "") {
+        self.word = word
+        self.translation = translation
+    }
 
     var trimmedWord: String {
         word.trimmingCharacters(in: .whitespacesAndNewlines)

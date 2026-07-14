@@ -40,12 +40,29 @@ struct WordGroupsView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
                     }
-                   .buttonStyle(.plain)
+                    .buttonStyle(.plain)
+                    .contextMenu {  //потом вынести
+                        if !group.isSystem {
+                            Button(role: .destructive) {
+                                wordGroupsViewModel.requestDeleteGroup(group: group)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
+                    }
                 }
             }
             .padding()
         }
         .background(Color(.systemGroupedBackground))
+        .alert(
+            "Delete this group?",
+            isPresented: $wordGroupsViewModel.isDeleteConfirmationShowing
+        ) {
+            Button("Delete", role: .destructive) {
+                wordGroupsViewModel.confirmDeleteGroup()
+            }
+        }
         .sheet(isPresented: $wordGroupsViewModel.isAddGroupViewIsShowing) {
             addGroupSheet
         }

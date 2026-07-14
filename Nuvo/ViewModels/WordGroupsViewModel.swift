@@ -11,13 +11,31 @@ import Combine
 final class WordGroupsViewModel: ObservableObject {
     @Published var groups: [WordGroupModel] = DefaultGroups.defaultGroups
     @Published var isAddGroupViewIsShowing = false
+    @Published var groupPendingDeletion: WordGroupModel?
+    @Published var isDeleteConfirmationShowing = false
     
     func addGroup(newGroup: WordGroupModel) {
         groups.append(newGroup)
     }
     
-    func deleteGroup() {
-        
+    func requestDeleteGroup(group: WordGroupModel) {
+        guard !group.isSystem else { return }
+        groupPendingDeletion = group
+        isDeleteConfirmationShowing = true
+    }
+    
+    func confirmDeleteGroup() {
+        guard let groupPendingDeletion else { return }
+        groups.removeAll { group in
+            group.id == groupPendingDeletion.id && !group.isSystem
+        }
+        self.groupPendingDeletion = nil
+        isDeleteConfirmationShowing = false
+    }
+    
+    func cancelDeletion() {
+        self.groupPendingDeletion = nil
+        isDeleteConfirmationShowing = false
     }
     
     func sortGroups() {}
@@ -43,6 +61,18 @@ final class WordGroupsViewModel: ObservableObject {
         groups[index].words.sort { $0.word < $1.word }
     }
     
+    func updateWord(
+        in groupID: WordGroupModel.ID,
+        wordID: WordModel.ID,
+        newWord: String,
+        newTranslation: String
+    ) {
+        guard let groupIndex = groups.firstIndex(where: { $0.id == groupID }) else { return }
+        guard let wordIndex = groups[groupIndex].words.firstIndex(where: { $0.id == wordID }) else { return }
+                                                                  
+        groups[groupIndex].words[wordIndex].word = newWord
+        groups[groupIndex].words[wordIndex].translation = newTranslation
+    }
 }
 
 

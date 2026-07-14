@@ -66,3 +66,8 @@ enum DefaultGroups {
     ]
 }
 
+enum FocusedField {
+    case word
+    case translation
+}
+

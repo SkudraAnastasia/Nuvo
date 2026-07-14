@@ -18,35 +18,38 @@ struct WordGroupDetailView: View {
     var body: some View {
         Group {
             if let group {
-                List(group.words, selection: $wordGroupDetailViewModel.selectedItems) { word in
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(word.word)
-                            .font(.headline)
-                        
-                        Text(word.translation)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
+                wordList(for: group)
+                    .buttonStyle(.plain)
+                    .navigationTitle(group.title)
+                } else {
+                    ContentUnavailableView("Group not found", systemImage: "folder")
                 }
-                .navigationTitle(group.title)
-            } else {
-                ContentUnavailableView("Group not found", systemImage: "folder")
             }
+        .environment(\.editMode, $wordGroupDetailViewModel.deleteMode)
+        .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
+        .safeAreaInset(edge: .bottom,  content: {  /////
+            if !wordGroupDetailViewModel.isSelectionActive {
+                LargeButtonView(title: "Start", colors: [.orange, .yellow], action: {})
+                    .padding(.bottom, 24)
+            }
+        })
+        .toolbar {
+            topToolbar
+            bottomToolbar
         }
-            .environment(\.editMode, $wordGroupDetailViewModel.deleteMode)
-            .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
-            .safeAreaInset(edge: .bottom,  content: {  /////
-                if !wordGroupDetailViewModel.isSelectionActive {
-                    LargeButtonView(title: "Start", colors: [.orange, .yellow], action: {})
-                        .padding(.bottom, 24)
-                }
+        .sheet(isPresented: $wordGroupDetailViewModel.isAddWordViewIsShowing) {
+            addWordSheet
+    }
+        .sheet(item: $wordGroupDetailViewModel.wordPendingEditing) { word in
+            EditWordView(word: word, onSave: { newWord, newTranslation in
+                wordGroupDetailViewModel.saveEditedWord(
+                    wordID: word.id,
+                    newWord: newWord,
+                    newTranslation: newTranslation,
+                    viewModel: wordGroupsViewModel,
+                    in: groupID)
             })
-            .toolbar {
-                topToolbar
-                bottomToolbar
-            }
-            .sheet(isPresented: $wordGroupDetailViewModel.isAddWordViewIsShowing) {
-                addWordSheet
+            .presentationDetents([.medium])
         }
     }
 }
@@ -123,6 +126,39 @@ private extension WordGroupDetailView {
             .blur(radius: 0)
             .presentationDetents([.medium])
             .presentationBackground(.white)
+        }
+    }
+}
+
+private extension WordGroupDetailView {
+    func wordRow(_ word: WordModel) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(word.word)
+                .font(.headline)
+
+            Text(word.translation)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    @ViewBuilder
+    func wordList(for group: WordGroupModel) -> some View {
+        if wordGroupDetailViewModel.isSelectionActive {
+            List(group.words, selection: $wordGroupDetailViewModel.selectedItems) { word in
+                wordRow(word)
+                    .tag(word.id)
+            }
+        } else {
+            List(group.words) { word in
+                Button {
+                    wordGroupDetailViewModel.startEditing(word: word)
+                } label: {
+                    wordRow(word)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+            }
         }
     }
 }

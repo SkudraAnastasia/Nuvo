@@ -9,8 +9,9 @@ import SwiftUI
 
 
 struct AddWordView: View {
-    @StateObject private var addWordViewModel = AddWordViewModel()
+    @StateObject private var addWordViewModel = WordFormViewModel()
     @Environment(\.dismiss) private var dismiss
+    @FocusState private var focusedField: FocusedField?
     
     let onSave: (String, String) -> Void
 
@@ -27,8 +28,10 @@ struct AddWordView: View {
             Spacer()
 
             WordFieldTextView(title: "Enter word", text: $addWordViewModel.word)
+                .focused($focusedField, equals: .word)
                 .padding(.vertical)
             WordFieldTextView(title: "Enter translation", text: $addWordViewModel.translation)
+                .focused($focusedField, equals: .translation)
             
             Spacer()
             
@@ -41,6 +44,9 @@ struct AddWordView: View {
         guard addWordViewModel.canSave else { return }
         onSave(addWordViewModel.trimmedWord, addWordViewModel.trimmedTranslation)
         addWordViewModel.clearFields()
+        DispatchQueue.main.async {
+            focusedField = .word
+        }
    
     }
     
@@ -49,4 +55,9 @@ struct AddWordView: View {
         onSave(addWordViewModel.trimmedWord, addWordViewModel.trimmedTranslation)
         dismiss()
     }
+}
+
+#Preview {
+    AddWordView(onSave: { (hui, popa) in
+    })
 }
