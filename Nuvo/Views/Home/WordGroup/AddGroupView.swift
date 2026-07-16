@@ -23,6 +23,7 @@ struct AddGroupView: View {
             
             WordFieldTextView(
                 title: "Enter title",
+                imageInTextField: Image(systemName: "character.book.closed"),
                 text: Binding(
                     get: { addGroupViewModel.title },
                     set: { addGroupViewModel.updateTitle(newValue:($0)) }

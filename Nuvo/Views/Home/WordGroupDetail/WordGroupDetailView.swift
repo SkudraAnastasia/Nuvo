@@ -49,7 +49,7 @@ struct WordGroupDetailView: View {
                     viewModel: wordGroupsViewModel,
                     in: groupID)
             })
-            .presentationDetents([.medium])
+            .presentationDetents([.large])
         }
     }
 }
@@ -173,7 +173,7 @@ private extension WordGroupDetailView {
                 wordGroupsViewModel.addWord(to: groupID, word: newWord)
             })
             .blur(radius: 0)
-            .presentationDetents([.medium])
+            .presentationDetents([.large])
             .presentationBackground(.white)
         }
     }

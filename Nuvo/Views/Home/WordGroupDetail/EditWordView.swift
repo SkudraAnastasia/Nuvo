@@ -33,9 +33,15 @@ struct EditWordView: View {
             
             Spacer()
 
-            WordFieldTextView(title: "Enter word", text: $editWordViewModel.word)
+            WordFieldTextView(
+                    title: "Enter word",
+                    imageInTextField: Image(systemName: "character.book.closed"),
+                    text: $editWordViewModel.word)
                 .padding(.vertical)
-            WordFieldTextView(title: "Enter translation", text: $editWordViewModel.translation)
+            WordFieldTextView(
+                title: "Enter translation",
+                imageInTextField: Image(systemName: "globe"),
+                text: $editWordViewModel.translation)
             
             Spacer()
             

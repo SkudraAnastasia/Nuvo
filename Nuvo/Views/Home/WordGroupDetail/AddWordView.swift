@@ -18,24 +18,62 @@ struct AddWordView: View {
     
     var body: some View {
         
-        VStack() {
+        VStack {
             
             Spacer()
             
-            Text("Add new words")
-                .font(.default)
+            HStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(Color.warmOrange.opacity(0.2))
+                        .frame(width: 80, height: 90)
+                        .offset(x: -5, y: -3)
+                    
+                    Image(systemName: "book.badge.plus.fill")
+                        .resizable()
+                        .frame(width: 60, height: 50)
+                        .foregroundStyle(.orange)
+                }
+                VStack {
+                    Text("New Word")
+                        .font(.title)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Add a word and translation to your vocabulary")
+                        .fontWeight(.light)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 24)
             
             Spacer()
+            
+            Text("Word")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+                .fontWeight(.light)
 
-            WordFieldTextView(title: "Enter word", text: $addWordViewModel.word)
+            WordFieldTextView(
+                    title: "Enter word",
+                    imageInTextField: Image(systemName: "character.book.closed"),
+                    text: $addWordViewModel.word)
                 .focused($focusedField, equals: .word)
-                .padding(.vertical)
-            WordFieldTextView(title: "Enter translation", text: $addWordViewModel.translation)
+                .padding(.bottom)
+            
+            Text("Translation")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+                .fontWeight(.light)
+            
+            WordFieldTextView(
+                    title: "Enter translation",
+                    imageInTextField: Image(systemName: "globe"),
+                    text: $addWordViewModel.translation)
                 .focused($focusedField, equals: .translation)
             
             Spacer()
             
-            LargeButtonView(title: "Add more", colors: [.green, .cyan], action: addMore)
+            LargeButtonView(title: "Add another", colors: [.green, .cyan], action: addMore)
             LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveWord)
         }
     }
@@ -58,6 +96,5 @@ struct AddWordView: View {
 }
 
 #Preview {
-    AddWordView(onSave: { (hui, popa) in
-    })
+    AddWordView(onSave: { _, _ in })
 }
