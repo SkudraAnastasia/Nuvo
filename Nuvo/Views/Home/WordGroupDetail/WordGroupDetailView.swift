@@ -67,13 +67,62 @@ private extension WordGroupDetailView {
                 Image(systemName: "plus")
             }
             Menu {
-                Button {} label: {
-                    Label("Sort A-Z", systemImage: "arrow.up")
+                Menu {
+                    Button {
+                        wordGroupDetailViewModel.sortMode = .newestFirst
+                    } label: {
+                        Label(
+                            "Newest first",
+                            systemImage: wordGroupDetailViewModel.isSelectedSortMode(mode: .newestFirst)
+                                ? "checkmark.circle.fill"
+                                : "calendar.badge.clock"
+                        )
+                    }
+                    .tint(wordGroupDetailViewModel.sortMode == .newestFirst ? .orange : .primary)
+                    
+                    Button {
+                        wordGroupDetailViewModel.sortMode = .oldestFirst
+                    } label: {
+                        Label(
+                            "Oldest first",
+                            systemImage: wordGroupDetailViewModel.isSelectedSortMode(mode: .oldestFirst)
+                                ? "checkmark.circle.fill"
+                                : "calendar"
+                        )
+                    }
+                    .tint(wordGroupDetailViewModel.sortMode == .oldestFirst ? .orange : .primary)
+
+                    Button {
+                        wordGroupDetailViewModel.sortMode = .alphabeticalAscending
+                    } label: {
+                        Label(
+                            "A-Z",
+                            systemImage: wordGroupDetailViewModel.isSelectedSortMode(mode: .alphabeticalAscending)
+                                ? "checkmark.circle.fill"
+                                : "arrow.up"
+                        )
+                    }
+                    .tint(wordGroupDetailViewModel.sortMode == .alphabeticalAscending ? .orange : .primary)
+
+                    Button {
+                        wordGroupDetailViewModel.sortMode = .alphabeticalDescending
+                    } label: {
+                        Label(
+                            "Z-A",
+                            systemImage: wordGroupDetailViewModel.isSelectedSortMode(mode: .alphabeticalDescending)
+                                ? "checkmark.circle.fill"
+                                : "arrow.down"
+                        )
+                    }
+                    .tint(wordGroupDetailViewModel.sortMode == .alphabeticalDescending ? .orange : .primary)
+                    
+                } label: {
+                    Label("Sort by", systemImage: "arrow.up")
                 }
-                Button {} label: {
-                    Label("Edit", systemImage: "pencil")
-                }
-                Button(role: .destructive) { wordGroupDetailViewModel.startSelection() } label: {
+                
+                Button(role: .destructive) {
+                    wordGroupDetailViewModel.startSelection()
+                } label: {
                     Label("Delete", systemImage: "trash")
                 }
             } label: {
@@ -144,13 +193,15 @@ private extension WordGroupDetailView {
     
     @ViewBuilder
     func wordList(for group: WordGroupModel) -> some View {
+        let words = wordGroupDetailViewModel.displayedWords(from: group.words)
+        
         if wordGroupDetailViewModel.isSelectionActive {
-            List(group.words, selection: $wordGroupDetailViewModel.selectedItems) { word in
+            List(words, selection: $wordGroupDetailViewModel.selectedItems) { word in
                 wordRow(word)
                     .tag(word.id)
             }
         } else {
-            List(group.words) { word in
+            List(words) { word in
                 Button {
                     wordGroupDetailViewModel.startEditing(word: word)
                 } label: {

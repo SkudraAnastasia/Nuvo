@@ -56,10 +56,12 @@ final class WordGroupsViewModel: ObservableObject {
 
     func deleteAll() {}
 
-    func sortWords(in groupID: WordGroupModel.ID) {
-        guard let index = groups.firstIndex(where: { $0.id == groupID }) else { return }
-        groups[index].words.sort { $0.word < $1.word }
-    }
+//    func sortWords(in groupID: WordGroupModel.ID) {
+//        guard let index = groups.firstIndex(where: { $0.id == groupID }) else { return }
+//        groups[index].words.sort {
+//            $0.word.localizedCaseInsensitiveCompare($1.word) == .orderedAscending
+//        }
+//    }
     
     func updateWord(
         in groupID: WordGroupModel.ID,

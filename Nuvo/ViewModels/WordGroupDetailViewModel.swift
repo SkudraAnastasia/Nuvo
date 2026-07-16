@@ -8,11 +8,19 @@ import SwiftUI
 import Foundation
 import Combine
 
+enum WordSortMode {
+    case newestFirst
+    case oldestFirst
+    case alphabeticalAscending
+    case alphabeticalDescending
+}
+
 final class WordGroupDetailViewModel: ObservableObject {
     @Published var selectedItems = Set<WordModel.ID>()
     @Published var deleteMode: EditMode = .inactive
     @Published var isAddWordViewIsShowing = false
     @Published var wordPendingEditing: WordModel?
+    @Published var sortMode: WordSortMode = .newestFirst
     
     var isDeleteDisabled: Bool {
         selectedItems.isEmpty
@@ -63,5 +71,26 @@ final class WordGroupDetailViewModel: ObservableObject {
             newTranslation: newTranslation
         )
         finishEditing()
+    }
+    
+    func displayedWords(from words: [WordModel]) -> [WordModel] {
+        switch sortMode {
+        case .newestFirst:
+            return words.sorted { $0.createdAt > $1.createdAt }
+        case .oldestFirst:
+            return words.sorted { $0.createdAt < $1.createdAt }
+        case .alphabeticalAscending:
+            return words.sorted {
+                $0.word.localizedCaseInsensitiveCompare($1.word) == .orderedAscending
+            }
+        case .alphabeticalDescending:
+            return words.sorted {
+                $0.word.localizedCaseInsensitiveCompare($1.word) == .orderedDescending
+            }
+        }
+    }
+    
+    func isSelectedSortMode(mode: WordSortMode) -> Bool {
+        sortMode == mode
     }
 }
