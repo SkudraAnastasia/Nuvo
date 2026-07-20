@@ -23,6 +23,7 @@ struct AddGroupView: View {
             
             WordFieldTextView(
                 title: "Enter title",
+                imageInTextField: Image(systemName: "character.book.closed"),
                 text: Binding(
                     get: { addGroupViewModel.title },
                     set: { addGroupViewModel.updateTitle(newValue:($0)) }
@@ -30,7 +31,7 @@ struct AddGroupView: View {
             )
                 .padding(.vertical)
             
-            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveTitle)
+            ButtonView(type: .primary, title: "Save", action: saveTitle)
         }
     }
     private func saveTitle() {

@@ -29,7 +29,7 @@ struct WordGroupDetailView: View {
         .toolbar(wordGroupDetailViewModel.isSelectionActive ? .hidden : .visible, for: .tabBar)
         .safeAreaInset(edge: .bottom,  content: {  /////
             if !wordGroupDetailViewModel.isSelectionActive {
-                LargeButtonView(title: "Start", colors: [.orange, .yellow], action: {})
+                ButtonView(type: .primary, title: "Start", action: {})
                     .padding(.bottom, 24)
             }
         })
@@ -49,7 +49,7 @@ struct WordGroupDetailView: View {
                     viewModel: wordGroupsViewModel,
                     in: groupID)
             })
-            .presentationDetents([.medium])
+            .presentationDetents([.large])
         }
     }
 }
@@ -173,7 +173,7 @@ private extension WordGroupDetailView {
                 wordGroupsViewModel.addWord(to: groupID, word: newWord)
             })
             .blur(radius: 0)
-            .presentationDetents([.medium])
+            .presentationDetents([.large])
             .presentationBackground(.white)
         }
     }
