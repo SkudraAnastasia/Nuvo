@@ -45,7 +45,7 @@ struct EditWordView: View {
             
             Spacer()
             
-            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveWord)
+            ButtonView(type: .primary, title: "Save", action: saveWord)
         }
     }
     

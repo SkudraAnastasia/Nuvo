@@ -31,7 +31,7 @@ struct AddGroupView: View {
             )
                 .padding(.vertical)
             
-            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveTitle)
+            ButtonView(type: .primary, title: "Save", action: saveTitle)
         }
     }
     private func saveTitle() {

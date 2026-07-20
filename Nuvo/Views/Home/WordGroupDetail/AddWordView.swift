@@ -73,8 +73,9 @@ struct AddWordView: View {
             
             Spacer()
             
-            LargeButtonView(title: "Add another", colors: [.green, .cyan], action: addMore)
-            LargeButtonView(title: "Save", colors: [.orange, .yellow], action: saveWord)
+            ButtonView(type: .secondary, title: "Add another", iconName: "plus", action: addMore)
+                .padding(.vertical, 8)
+            ButtonView(type: .primary, title: "Save", action: saveWord)
         }
     }
     
