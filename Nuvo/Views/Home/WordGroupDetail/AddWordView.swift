@@ -23,28 +23,37 @@ struct AddWordView: View {
             Spacer()
             
             HStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(Color.warmOrange.opacity(0.2))
-                        .frame(width: 80, height: 90)
-                        .offset(x: -5, y: -3)
+                Image("AddWordBook")
+                    .resizable()
+                    .frame(width: 110, height: 110)
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                    .padding(.trailing, 12)
                     
-                    Image(systemName: "book.badge.plus.fill")
-                        .resizable()
-                        .frame(width: 60, height: 50)
-                        .foregroundStyle(.orange)
-                }
-                VStack {
-                    Text("New Word")
-                        .font(.title)
+                
+                VStack(spacing: 14) {
+                    Text("New word")
+                        .fontWeight(.semibold)
+                        .font(.largeTitle)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Text("Add a word and translation to your vocabulary")
                         .fontWeight(.light)
+                        .font(.callout)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 24)
+            
+            HStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: 50, height: 6)
+                    .foregroundStyle(.warmOrange)
+                
+                Circle()
+                    .frame(width: 6, height: 6)
+                    .foregroundStyle(.warmOrange)
+            }
+            .offset(x: -26, y: 14)
             
             Spacer()
             
