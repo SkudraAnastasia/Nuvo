@@ -83,8 +83,9 @@ extension WordGroupsView {
                 let newGroup = WordGroupModel(title: title, words: [], isSystem: false)
                 wordGroupsViewModel.addGroup(newGroup: newGroup) })
                 .blur(radius: 0)
-                .presentationDetents([.medium])
+                .presentationDetents([.fraction(0.70)])
                 .presentationBackground(.white)
+                .presentationDragIndicator(.automatic)
         }
     }
 }

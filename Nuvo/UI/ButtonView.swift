@@ -41,7 +41,8 @@ struct ButtonView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            .frame(maxWidth: .infinity, maxHeight: 78)
+            .frame(maxWidth: .infinity)
+            .frame(height: 78)
             .background(
                 LinearGradient(
                     colors: type.backgroundColors,
