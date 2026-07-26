@@ -14,20 +14,37 @@ struct AddGroupView: View {
 
     var body: some View {
 
-        VStack(spacing: 16) {
-            Text("Add new group")
+        VStack(spacing: 6) {
+            Image("Categories")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 200, height: 200)
+                .padding(.top, 26)
+            
+            Text("New group")
+                .font(.title)
+                .fontWeight(.semibold)
+                .padding(.bottom)
+            
+            Text("What words will this group hold?")
                 .font(.headline)
-                .padding()
+                .foregroundStyle(.primary)
+            Text("For example: travel, food, hobbies, or study")
+                .foregroundStyle(.separator)
+                .font(.subheadline)
             
             Spacer()
             
             WordFieldTextView(
+                mode: .add,
                 title: "Enter title",
                 imageInTextField: Image(systemName: "character.book.closed"),
                 text: Binding(
                     get: { addGroupViewModel.title },
                     set: { addGroupViewModel.updateTitle(newValue:($0)) }
-                )
+                ),
+                submitLabel: .next,
+                onSubmit: { saveTitle() }
             )
                 .padding(.vertical)
             

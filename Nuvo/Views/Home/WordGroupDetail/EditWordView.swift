@@ -10,10 +10,14 @@ import SwiftUI
 struct EditWordView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var editWordViewModel: WordFormViewModel
+    @FocusState private var focusedField: FocusedField?
+    
     
     private var onSave: (String, String) -> Void
     
-    init(word: WordModel, onSave: @escaping (String, String) -> Void) {
+    init(
+        word: WordModel,
+        onSave: @escaping (String, String) -> Void) {
         _editWordViewModel = StateObject(wrappedValue: WordFormViewModel(
             word: word.word,
             translation: word.translation
@@ -23,30 +27,23 @@ struct EditWordView: View {
     }
     
     var body: some View {
-        
-        VStack() {
-            
-            Spacer()
-            
+        VStack(spacing: 18) {
             Text("Edit word")
-                .font(.default)
+                .font(.title)
+                .fontWeight(.semibold)
+                .padding(.top, 28)
             
-            Spacer()
-
-            WordFieldTextView(
-                    title: "Enter word",
-                    imageInTextField: Image(systemName: "character.book.closed"),
-                    text: $editWordViewModel.word)
-                .padding(.vertical)
-            WordFieldTextView(
-                title: "Enter translation",
-                imageInTextField: Image(systemName: "globe"),
-                text: $editWordViewModel.translation)
-            
-            Spacer()
-            
-            ButtonView(type: .primary, title: "Save", action: saveWord)
+            WordFormFieldsView(
+                word: $editWordViewModel.word,
+                translation: $editWordViewModel.translation,
+                mode: .edit,
+                focusedField: $focusedField,
+                onSave: saveWord,
+                onAddAnother: nil
+            )
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.white)
     }
     
     func saveWord() {
