@@ -30,39 +30,53 @@ enum AppTab: CaseIterable {
 enum DefaultGroups {
   static let defaultGroups = [
         WordGroupModel(
-            title: "Favourites⭐️",
+            title: "Favourites",
             words: [],
-            isSystem: true
+            isSystem: true,
+            emoji: "⭐️",
+            color: .yellow
         ),
         WordGroupModel(
-            title: "Travel✈️🏖",
+            title: "Travel",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "✈️",
+            color: .blue
         ),
         WordGroupModel(
-            title: "Work💸💻",
+            title: "Work",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "💼",
+            color: .green
         ),
         WordGroupModel(
-            title: "Food🥘🍔",
+            title: "Food",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "🍔",
+            color: .orange
         ),
         WordGroupModel(
-            title: "Study📒📝",
+            title: "Study",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "📚",
+            color: .red
         ),
         WordGroupModel(
-            title: "Hobbies🎮🪂",
+            title: "Hobbies",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "🎨",
+            color: .purple
         ),
         WordGroupModel(
-            title: "Home🏡🛏",
+            title: "Home",
             words: [],
-            isSystem: false
+            isSystem: false,
+            emoji: "🏡",
+            color: .cyan
         )
     ]
 }

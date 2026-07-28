@@ -18,13 +18,17 @@ struct TabBarView: View {
                     case .home:
                         NavigationStack {
                             WordGroupsView()
+                                .tint(.primary)
                         }
                     case .statistic: StatisticView()
+                            .tint(.primary)
                     case .settings: SettingsView()
+                            .tint(.primary)
                     }
                 }
             }
         }
+        .tint(.orange)
     }
 }
 
