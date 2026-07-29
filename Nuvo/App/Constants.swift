@@ -7,12 +7,15 @@ import SwiftUI
 
 enum AppTab: CaseIterable {
     case home
+    case practice
     case statistic
     case settings
+
     
     var title: String {
         switch self {
         case .home: "Home"
+        case .practice: "Practice"
         case .statistic: "Statistics"
         case .settings: "Settings"
         }
@@ -21,6 +24,7 @@ enum AppTab: CaseIterable {
     var icon: String {
         switch self {
         case .home: "house"
+        case .practice: "dumbbell.fill"
         case .statistic: "chart.bar"
         case .settings: "gearshape"
         }

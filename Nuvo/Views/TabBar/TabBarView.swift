@@ -20,6 +20,8 @@ struct TabBarView: View {
                             WordGroupsView()
                                 .tint(.primary)
                         }
+                    case .practice:  PracticeView()
+                            .tint(.primary)
                     case .statistic: StatisticView()
                             .tint(.primary)
                     case .settings: SettingsView()
