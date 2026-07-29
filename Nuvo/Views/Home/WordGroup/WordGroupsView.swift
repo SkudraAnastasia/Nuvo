@@ -27,13 +27,14 @@ struct WordGroupsView: View {
                             )
                     } label: {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(group.title)
-                                .foregroundStyle(.primary)
-                                .font(.headline)
-                            Text("\(group.words.count) words")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            GroupCardView(
+                                title: group.title,
+                                emoji: group.emoji,
+                                wordCount: group.words.count,
+                                color: group.color?.groupColor
+                            )
                         }
+                        .navigationTitle("Groups")
                         .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
                         .padding()
                         .background(.white)
@@ -54,7 +55,7 @@ struct WordGroupsView: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Color(.orange).opacity(0.1))
         .alert(
             "Delete this group?",
             isPresented: $wordGroupsViewModel.isDeleteConfirmationShowing
@@ -83,7 +84,7 @@ extension WordGroupsView {
                 let newGroup = WordGroupModel(title: title, words: [], isSystem: false)
                 wordGroupsViewModel.addGroup(newGroup: newGroup) })
                 .blur(radius: 0)
-                .presentationDetents([.fraction(0.70)])
+                .presentationDetents([.fraction(0.80)])
                 .presentationBackground(.white)
                 .presentationDragIndicator(.automatic)
         }

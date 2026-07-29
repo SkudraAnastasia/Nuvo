@@ -33,8 +33,6 @@ struct AddGroupView: View {
                 .foregroundStyle(.separator)
                 .font(.subheadline)
             
-            Spacer()
-            
             WordFieldTextView(
                 mode: .add,
                 title: "Enter title",
@@ -47,6 +45,8 @@ struct AddGroupView: View {
                 onSubmit: { saveTitle() }
             )
                 .padding(.vertical)
+            
+            Spacer()
             
             ButtonView(type: .primary, title: "Save", action: saveTitle)
         }
