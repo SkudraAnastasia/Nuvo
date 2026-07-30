@@ -11,6 +11,7 @@ enum PracticeMode: CaseIterable, Identifiable {
     case flashcards
     case matchWords
     case typeAnswer
+    case express
     
     var id: Self { self }
     
@@ -19,6 +20,7 @@ enum PracticeMode: CaseIterable, Identifiable {
         case .flashcards: "Flashcards"
         case .matchWords: "MatchWords"
         case .typeAnswer: "TypeAnswer"
+        case .express: "Express"
         }
     }
     
@@ -27,6 +29,7 @@ enum PracticeMode: CaseIterable, Identifiable {
         case .flashcards: "Review words one by one"
         case .matchWords: "Connect words and translations"
         case .typeAnswer: "Write the english word"
+        case .express: "hui hui hui"
         }
     }
     
@@ -35,6 +38,7 @@ enum PracticeMode: CaseIterable, Identifiable {
         case .flashcards: "📒"
         case .matchWords: "🔗"
         case .typeAnswer: "📝"
+        case .express: "⏰"
         }
     }
     
@@ -43,6 +47,7 @@ enum PracticeMode: CaseIterable, Identifiable {
         case .flashcards: .yellow
         case .matchWords: .green
         case .typeAnswer: .pink
+        case .express: .red
         }
     }
 }

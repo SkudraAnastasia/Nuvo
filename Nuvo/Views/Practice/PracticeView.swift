@@ -12,14 +12,37 @@ struct PracticeView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Practice")
+                    .font(.title)
+                    .foregroundStyle(.primary)
+                    .fontWeight(.semibold)
+                
+                StreakView()
+                    .padding(.bottom)
+                
+                Text("Choose a workout")
+                    .font(.title2)
+                    .foregroundStyle(.primary)
+                    .fontWeight(.semibold)
+                
                 ForEach(practiceViewModel.modes) { mode in
                     PracticeModeCardView(mode: mode)
                 }
+                
+                Text("Practice from")
+                    .padding(.top)
+                    .font(.callout)
+                    .foregroundStyle(.primary)
+                    .fontWeight(.semibold)
+                
+                //foreach cс группами
             }
-            .background(.white)
+            .padding()
+            .background(.clear)
         }
-        .background(Color(.orange).opacity(0.1))
+        .padding(.horizontal, 4)
+        .background(.orangeBackground.opacity(0.6))
     }
 }
 

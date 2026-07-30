@@ -55,7 +55,7 @@ struct WordGroupsView: View {
             }
             .padding()
         }
-        .background(Color(.orange).opacity(0.1))
+        .background(.orangeBackground.opacity(0.6))
         .alert(
             "Delete this group?",
             isPresented: $wordGroupsViewModel.isDeleteConfirmationShowing

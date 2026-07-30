@@ -13,14 +13,14 @@ struct PracticeModeCardView: View {
     var body: some View {
         HStack(spacing: 16) {
             Text(mode.emoji)
-                .font(.system(size: 42))
-                .frame(width: 76, height: 76)
+                .font(.system(size: 38))
+                .frame(width: 70, height: 70)
                 .background((mode.color).opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 38))
-            VStack(alignment: .leading, spacing: 6) {
+                .clipShape(RoundedRectangle(cornerRadius: 35))
+            VStack(alignment: .leading, spacing: 4) {
                 Text(mode.title)
                     .foregroundStyle(.primary)
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.semibold)
                 Text(mode.subtitle)
                     .foregroundStyle(.secondary)
@@ -29,10 +29,16 @@ struct PracticeModeCardView: View {
             Spacer()
             
             Image(systemName: "chevron.right")
-                .font(.system(size: 13, weight: .semibold))
+                .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(.orange)
+                .padding(.horizontal, 10)
         }
-        .padding()
+        .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 90)
+        .background(.darkWhite)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
     }
 }
 
