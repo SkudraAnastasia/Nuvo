@@ -28,7 +28,7 @@ struct StreakView: View {
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: 120)
+        .frame(height: 200)
         .background(.darkWhite)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)

@@ -14,4 +14,20 @@ final class PracticeViewModel: ObservableObject {
     var modes: [PracticeMode] {
         PracticeMode.allCases
     }
+    
+    var allGroupsSelected: Bool {
+        selectedGroupID == nil
+    }
+    
+    func selectAllGroups() {
+        selectedGroupID = nil
+    }
+    
+    func selectGroup(_ group: WordGroupModel) {
+        selectedGroupID = group.id
+    }
+    
+    func isSelected(_ group: WordGroupModel) -> Bool {
+        selectedGroupID == group.id
+    }
 }

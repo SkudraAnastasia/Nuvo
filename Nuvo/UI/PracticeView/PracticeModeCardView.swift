@@ -13,14 +13,14 @@ struct PracticeModeCardView: View {
     var body: some View {
         HStack(spacing: 16) {
             Text(mode.emoji)
-                .font(.system(size: 38))
-                .frame(width: 70, height: 70)
+                .font(.system(size: 34))
+                .frame(width: 60, height: 60)
                 .background((mode.color).opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 35))
-            VStack(alignment: .leading, spacing: 4) {
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+            VStack(alignment: .leading, spacing: 2) {
                 Text(mode.title)
                     .foregroundStyle(.primary)
-                    .font(.title2)
+                    .font(.title3)
                     .fontWeight(.semibold)
                 Text(mode.subtitle)
                     .foregroundStyle(.secondary)

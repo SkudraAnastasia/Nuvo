@@ -9,47 +9,71 @@ import SwiftUI
 
 struct PracticeView: View {
     @StateObject private var practiceViewModel = PracticeViewModel()
+    @ObservedObject var wordGroupsViewModel: WordGroupsViewModel
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Practice")
-                    .font(.title)
-                    .foregroundStyle(.primary)
-                    .fontWeight(.semibold)
-                
-                StreakView()
-                    .padding(.bottom)
-                
-                Text("Choose a workout")
-                    .font(.title2)
-                    .foregroundStyle(.primary)
-                    .fontWeight(.semibold)
-                
-                ForEach(practiceViewModel.modes) { mode in
-                    PracticeModeCardView(mode: mode)
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Practice")
+                .font(.title)
+                .foregroundStyle(.primary)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
+            
+            StreakView()
+                .padding(.horizontal)
+            
+            HStack(spacing: 12) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        GroupFilterChipView(
+                            title: "All",
+                            emoji: "🌎",
+                            isSelected: practiceViewModel.allGroupsSelected,
+                            action: {
+                                practiceViewModel.selectAllGroups()
+                            }
+                        )
+                        ForEach(wordGroupsViewModel.groups) { group in
+                            GroupFilterChipView(
+                                title: group.title,
+                                emoji: group.emoji ?? "",
+                                isSelected: practiceViewModel.isSelected(group),
+                                action: {
+                                    practiceViewModel.selectGroup(group)
+                                }
+                            )
+                        }
+                    }
+                    .frame(height: 50)
                 }
-                
-                Text("Practice from")
-                    .padding(.top)
-                    .font(.callout)
-                    .foregroundStyle(.primary)
-                    .fontWeight(.semibold)
-                
-                //foreach cс группами
+                .contentMargins(.horizontal, 16, for: .scrollContent)
             }
-            .padding()
-            .background(.clear)
+        
+            Text("Choose a workout")
+                .font(.title2)
+                .foregroundStyle(.primary)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
+            
+            ScrollView {
+                VStack(alignment: .leading) {
+                    ForEach(practiceViewModel.modes) { mode in
+                        PracticeModeCardView(mode: mode)
+                    }
+                }
+                .background(.clear)
+            }
+            .padding(.horizontal)
         }
-        .padding(.horizontal, 4)
         .background(.orangeBackground.opacity(0.6))
     }
 }
 
 #Preview {
-    PracticeView()
+    PracticeView(wordGroupsViewModel: WordGroupsViewModel())
 }
 
 private extension PracticeView {
     
 }
+
