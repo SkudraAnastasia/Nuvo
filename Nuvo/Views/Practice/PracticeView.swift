@@ -39,7 +39,7 @@ struct PracticeView: View {
                                 emoji: group.emoji ?? "",
                                 isSelected: practiceViewModel.isSelected(group),
                                 action: {
-                                    practiceViewModel.selectGroup(group)
+                                    practiceViewModel.toggleGroup(group)
                                 }
                             )
                         }

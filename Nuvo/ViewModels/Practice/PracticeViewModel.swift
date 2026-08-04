@@ -9,25 +9,35 @@ import Combine
 
 final class PracticeViewModel: ObservableObject {
     @Published var selectedMode: PracticeMode?
-    @Published var selectedGroupID: WordGroupModel.ID?
+    @Published var selectedGroupID: Set<WordGroupModel.ID> = []
     
     var modes: [PracticeMode] {
         PracticeMode.allCases
     }
     
     var allGroupsSelected: Bool {
-        selectedGroupID == nil
+        selectedGroupID.isEmpty
     }
     
     func selectAllGroups() {
-        selectedGroupID = nil
+        selectedGroupID.removeAll()
     }
     
     func selectGroup(_ group: WordGroupModel) {
-        selectedGroupID = group.id
+        selectedGroupID.insert(group.id)
     }
     
-    func isSelected(_ group: WordGroupModel) -> Bool {
-        selectedGroupID == group.id
+    func isSelected(_ groups: WordGroupModel) -> Bool {
+        selectedGroupID.contains(groups.id)
+    }
+    
+    func toggleGroup(_ group: WordGroupModel) {
+        if selectedGroupID.contains(group.id) {
+            selectedGroupID.remove(group.id)
+        } else {
+            selectGroup(group)
+        }
     }
 }
+
+
