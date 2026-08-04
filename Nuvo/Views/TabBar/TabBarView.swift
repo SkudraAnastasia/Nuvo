@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     @State private var selectedTab: AppTab = .home
+    @StateObject private var wordGroupsViewModel = WordGroupsViewModel()
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -17,9 +18,11 @@ struct TabBarView: View {
                     switch tab {
                     case .home:
                         NavigationStack {
-                            WordGroupsView()
+                            WordGroupsView(wordGroupsViewModel: wordGroupsViewModel)
                                 .tint(.primary)
                         }
+                    case .practice:  PracticeView(wordGroupsViewModel: wordGroupsViewModel)
+                            .tint(.primary)
                     case .statistic: StatisticView()
                             .tint(.primary)
                     case .settings: SettingsView()

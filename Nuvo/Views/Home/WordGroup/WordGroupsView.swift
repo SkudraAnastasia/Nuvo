@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WordGroupsView: View {
-    @StateObject private var wordGroupsViewModel = WordGroupsViewModel()
+    @ObservedObject var wordGroupsViewModel: WordGroupsViewModel
     
     private let colums = [
         GridItem(.flexible(), spacing: 12),
@@ -55,7 +55,7 @@ struct WordGroupsView: View {
             }
             .padding()
         }
-        .background(Color(.orange).opacity(0.1))
+        .background(.orangeBackground.opacity(0.6))
         .alert(
             "Delete this group?",
             isPresented: $wordGroupsViewModel.isDeleteConfirmationShowing
@@ -74,7 +74,7 @@ struct WordGroupsView: View {
 }
 
 #Preview {
-    WordGroupsView()
+    WordGroupsView(wordGroupsViewModel: WordGroupsViewModel())
 }
 
 extension WordGroupsView {

@@ -55,6 +55,7 @@ struct WordGroupDetailView: View {
     }
 }
 
+
 //MARK: Toolbar
 private extension WordGroupDetailView {
     
@@ -202,6 +203,8 @@ private extension WordGroupDetailView {
                 wordRow(word)
                     .tag(word.id)
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.orange.opacity(0.1))
         } else {
             List(words) { word in
                 Button {
@@ -212,6 +215,8 @@ private extension WordGroupDetailView {
                         .contentShape(Rectangle())
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.orange.opacity(0.05))
         }
     }
 }
