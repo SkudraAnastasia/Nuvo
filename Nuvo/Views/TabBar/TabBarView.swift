@@ -21,8 +21,11 @@ struct TabBarView: View {
                             WordGroupsView(wordGroupsViewModel: wordGroupsViewModel)
                                 .tint(.primary)
                         }
-                    case .practice:  PracticeView(wordGroupsViewModel: wordGroupsViewModel)
-                            .tint(.primary)
+                    case .practice:
+                        NavigationStack {
+                            PracticeView(wordGroupsViewModel: wordGroupsViewModel)
+                                .tint(.primary)
+                        }
                     case .statistic: StatisticView()
                             .tint(.primary)
                     case .settings: SettingsView()

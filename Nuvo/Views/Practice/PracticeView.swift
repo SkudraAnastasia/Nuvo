@@ -58,7 +58,12 @@ struct PracticeView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     ForEach(practiceViewModel.modes) { mode in
-                        PracticeModeCardView(mode: mode)
+                        Button {
+                            practiceViewModel.selectedMode = mode
+                        } label: {
+                            PracticeModeCardView(mode: mode)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .background(.clear)
@@ -66,11 +71,21 @@ struct PracticeView: View {
             .padding(.horizontal)
         }
         .background(.orangeBackground.opacity(0.6))
+        .navigationDestination(item: $practiceViewModel.selectedMode) { mode in
+            switch mode {
+            case .flashcards: FlashcardsView(words: practiceViewModel.wordsForPractice(from: wordGroupsViewModel.groups))
+            case .matchWords: Text("")
+            case .typeAnswer: Text("")
+            case .express: Text("")
+            }
+        }
     }
 }
 
 #Preview {
-    PracticeView(wordGroupsViewModel: WordGroupsViewModel())
+    NavigationStack {
+        PracticeView(wordGroupsViewModel: WordGroupsViewModel())
+    }
 }
 
 private extension PracticeView {
