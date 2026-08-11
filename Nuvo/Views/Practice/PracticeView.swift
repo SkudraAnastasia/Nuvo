@@ -73,7 +73,7 @@ struct PracticeView: View {
         .background(.orangeBackground.opacity(0.6))
         .navigationDestination(item: $practiceViewModel.selectedMode) { mode in
             switch mode {
-            case .flashcards: FlashcardsView()
+            case .flashcards: FlashcardsView(words: practiceViewModel.wordsForPractice(from: wordGroupsViewModel.groups))
             case .matchWords: Text("")
             case .typeAnswer: Text("")
             case .express: Text("")
