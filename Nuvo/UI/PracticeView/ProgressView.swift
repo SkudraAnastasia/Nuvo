@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FlashcardsProgressView: View {
+struct ProgressView: View {
     let progress: CGFloat
     
     var body: some View {
@@ -35,5 +35,5 @@ struct FlashcardsProgressView: View {
 }
 
 #Preview {
-    FlashcardsProgressView(progress: 1)
+    ProgressView(progress: 1)
 }
