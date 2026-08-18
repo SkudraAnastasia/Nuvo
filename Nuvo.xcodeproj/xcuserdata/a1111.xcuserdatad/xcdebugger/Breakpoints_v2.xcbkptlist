@@ -30,10 +30,10 @@
             filePath = "Nuvo/Views/Home/WordGroupDetail/AddWordView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "addMore()"
-            landmarkType = "7">
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
