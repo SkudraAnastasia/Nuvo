@@ -140,9 +140,7 @@ final class MatchWordsViewModel: ObservableObject {
             
             if self.matchedWordIDs.count == self.pairsPerRound {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    withAnimation(.bouncy(duration: 0.2)) {
-                        self.nextRound()
-                    }
+                    self.nextRound()
                 }
             }
             

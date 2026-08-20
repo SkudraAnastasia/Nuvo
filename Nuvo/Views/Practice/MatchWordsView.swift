@@ -64,6 +64,9 @@ struct MatchWordsView: View {
                 }
 
             }
+            .id(matchwordsViewModel.currentRoundIndex)
+            .transition(.opacity)
+            .animation(.easeInOut(duration: 0.3), value: matchwordsViewModel.currentRoundIndex)
             
             Spacer()
         }
