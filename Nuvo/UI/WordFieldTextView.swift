@@ -18,6 +18,7 @@ struct WordFieldTextView: View {
     let imageInTextField: Image
     @Binding var text: String
     let submitLabel: SubmitLabel
+    let characterLimit = 255
     let onSubmit: () -> Void
     
     init(
@@ -64,6 +65,11 @@ struct WordFieldTextView: View {
                     RoundedRectangle(cornerRadius: 24)
                         .stroke(Color.warmOrange.opacity(0.5), lineWidth: 1))
                 .padding(.horizontal)
+                .onChange(of: text) { _, newValue in
+                    if newValue.count > characterLimit {
+                        text = String(newValue.prefix(characterLimit))
+                    }
+                }
    }
 }
 

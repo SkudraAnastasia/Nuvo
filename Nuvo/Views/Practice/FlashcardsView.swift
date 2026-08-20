@@ -19,7 +19,7 @@ struct FlashcardsView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            FlashcardsProgressView(progress: flashcardsViewModel.progressValue)
+            ProgressView(progress: flashcardsViewModel.progressValue)
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
             Text(flashcardsViewModel.progressText)

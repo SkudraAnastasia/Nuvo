@@ -58,3 +58,9 @@ enum ButtonType {
         }
     }
 }
+
+enum MatchWordsCardStatus {
+    case matched
+    case wrong
+    case normal
+}

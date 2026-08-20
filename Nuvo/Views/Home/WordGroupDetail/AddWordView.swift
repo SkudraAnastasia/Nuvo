@@ -60,14 +60,9 @@ struct AddWordView: View {
                     translation: $addWordViewModel.translation,
                     mode: .add,
                     focusedField: $focusedField,
-                    onSave: saveWord) {
-                        ButtonView(
-                            type: .secondary,
-                            title: "Add another",
-                            iconName: "plus",
-                            action: addMore
-                        )
-                    }
+                    onSave: saveWord,
+                    onAddAnother: addMore
+                    )
             }
             .padding(.vertical, 24)
         }
